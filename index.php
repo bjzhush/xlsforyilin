@@ -148,15 +148,11 @@ include "vendor/autoload.php";
       }
       $allDianpu = array_unique($allDianpu);
 
-    //start to output csv
-      $fp = fopen('result.csv', 'w');
-     if ($fp === false ) {
-        exit('write error');
-     }
       $firstLine = '店铺,elm订单,elm销售额,elm抵用券金额,elm ASO,APP 订单,APP销售额,APP ASO,elm订单占比,elm销售额占比,elm抵用券数量,美团订单,美团销售额,美团抵用劵金额,美团ASO,美团订单占比	,美团销售额占比,美团抵用券数量';
       $firstLine = mb_convert_encoding($firstLine, 'GB2312');
+      $allCsvRows = [];
       $tmpRow = explode(',', $firstLine);
-      fputcsv($fp, $tmpRow);
+      $allCsvRows[] = $tmpRow;
 
       foreach ($allDianpu as $dianpu) {
        if (!isset($appD[$dianpu])) {
@@ -246,12 +242,12 @@ include "vendor/autoload.php";
        }
 
        $tmpRow[] = $mtD[$dianpu]['ddl'];
+          
+       $allCsvRows[] = $tmpRow;
 
-       fputcsv($fp, $tmpRow);
 
       }
 
-      fclose($fp);
 
          
  } catch (Exception $e) {
@@ -260,6 +256,17 @@ include "vendor/autoload.php";
     exit;
  }
 
-?>
 
-<a href="/result.csv">Download Result</a>
+$fileName = 'result';
+    
+header("content-Type:text/html; charset=gbk");
+header("Content-Type:application/vnd.ms-excel");
+header('Content-Disposition: attachment; filename='.$fileName.'.csv');
+
+foreach ($allCsvRows as $row) {
+    foreach ($row as $column) {
+        echo $column.',';
+    }
+    echo "\r";
+}
+
