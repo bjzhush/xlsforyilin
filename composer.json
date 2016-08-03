@@ -1,0 +1,13 @@
+{
+    "name": "root/xlsforyilin",
+    "type": "project",
+    "require": {
+        "phpoffice/phpexcel": "^1.8"
+    },
+    "authors": [
+        {
+            "name": "bjzhush",
+            "email": "bjzhush@gmail.com"
+        }
+    ]
+}
