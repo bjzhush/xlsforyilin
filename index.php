@@ -149,7 +149,7 @@ include "vendor/autoload.php";
       $allDianpu = array_unique($allDianpu);
 
       $firstLine = '店铺,elm订单,elm销售额,elm抵用券金额,elm ASO,APP 订单,APP销售额,APP ASO,elm订单占比,elm销售额占比,elm抵用券数量,美团订单,美团销售额,美团抵用劵金额,美团ASO,美团订单占比,美团销售额占比,美团抵用券数量';
-      $firstLine = mb_convert_encoding($firstLine, 'GB2312');
+      $firstLine = mb_convert_encoding($firstLine, 'GB18030');
       $allCsvRows = [];
       $tmpRow = explode(',', $firstLine);
       $allCsvRows[] = $tmpRow;
