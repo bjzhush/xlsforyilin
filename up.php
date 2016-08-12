@@ -11,4 +11,4 @@ foreach ($_FILES["xls"]["error"] as $key => $error) {
     echo "Upload OK";
 }
 ?>
-<a href="/down">Download Result</a>
+<a href="/down.php">Download Result</a>
