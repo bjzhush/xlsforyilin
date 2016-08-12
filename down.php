@@ -3,6 +3,7 @@ include "vendor/autoload.php";
  try {
 
       $file = './demo.xlsx';
+      $path = './result.csv';
 
       $inputFileType = PHPExcel_IOFactory::identify($file);
       $objReader = PHPExcel_IOFactory::createReader($inputFileType);
@@ -149,7 +150,6 @@ include "vendor/autoload.php";
       $allDianpu = array_unique($allDianpu);
 
       $firstLine = '店铺,elm订单,elm销售额,elm抵用券金额,elm ASO,APP 订单,APP销售额,APP ASO,elm订单占比,elm销售额占比,elm抵用券数量,美团订单,美团销售额,美团抵用劵金额,美团ASO,美团订单占比,美团销售额占比,美团抵用券数量';
-      $firstLine = mb_convert_encoding($firstLine, 'GB18030');
       $allCsvRows = [];
       $tmpRow = explode(',', $firstLine);
       $allCsvRows[] = $tmpRow;
@@ -183,7 +183,8 @@ include "vendor/autoload.php";
 
       foreach ($allDianpu as $dianpu) {
        $tmpRow = [];
-       $tmpRow[] = mb_convert_encoding('U掌柜('.$dianpu.')', 'GB2312');
+       //$tmpRow[] = mb_convert_encoding('U掌柜('.$dianpu.')', 'GB2312');
+       $tmpRow[] = 'U掌柜('.$dianpu.')';
        $tmpRow[] = $elmD[$dianpu]['ddl'];
        $tmpRow[] = $elmD[$dianpu]['xse'];
        $tmpRow[] = $elmD[$dianpu]['dyqzk'];
@@ -258,14 +259,15 @@ include "vendor/autoload.php";
 
 
 $fileName = 'result';
-    
+#    
 header("content-Type:text/html; charset=gbk");
 header("Content-Type:application/vnd.ms-excel");
-header('Content-Disposition: attachment; filename='.$fileName.'.csv');
+header('Content-Disposition: attachment; filename='.$fileName.'.xls');
+//echo mb_convert_encoding(file_get_contents('./result.csv'),'GB18030');
 
 foreach ($allCsvRows as $row) {
     foreach ($row as $column) {
-        echo $column.',';
+        echo $column."\t";
     }
     echo "\r";
 }
